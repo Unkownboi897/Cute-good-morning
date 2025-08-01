@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Good Morning! 💌</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffebee;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #d81b60;
+    }
+
+    /* Envelope */
+    .envelope {
+      position: relative;
+      width: 200px;
+      height: 120px;
+      background: #f8bbd0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .envelope:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-top: 70px solid #f06292;
+      transform-origin: top;
+      transform: rotateX(0deg);
+      transition: all 0.3s ease;
+      z-index: 5;
+    }
+    .envelope.open:before {
+      transform: rotateX(180deg);
+    }
+
+    /* Heart Seal */
+    .heart-seal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: #e91e63;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 20px;
+      z-index: 15;
+      transition: opacity 0.3s ease;
+    }
+    .envelope.open .heart-seal {
+      opacity: 0;
+    }
+
+    /* Message Box */
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 220px;
+      min-height: 120px;
+      background: white;
+      border-radius: 5px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1;
+    }
+    .message h1 {
+      font-size: 24px;
+      margin: 0 0 10px 0;
+      color: #e91e63;
+    }
+    .message p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* Instruction */
+    .instruction {
+      position: absolute;
+      bottom: 20%;
+      font-size: 16px;
+      color: #e91e63;
+      font-style: italic;
+    }
+
+    /* Floating Hearts */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4081;
+      transform: rotate(45deg);
+      opacity: 0;
+      animation: float 5s ease-in-out infinite;
+    }
+    .heart:before, .heart:after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: #ff4081;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .heart:before { top: -10px; left: 0; }
+    .heart:after { top: 0; left: -10px; }
+    @keyframes float {
+      0%, 100% { transform: rotate(45deg) translateY(0) scale(1); opacity: 0.7; }
+      50% { transform: rotate(45deg) translateY(-20px) scale(1.1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope" id="envelope">
+    <div class="heart-seal">❤️</div>
+    <div class="message" id="message">
+      <h1>Good Morning Cutie! 🌸</h1>
+      <p>May your day be as bright<br>and sweet as you are! 💖</p>
+    </div>
+  </div>
+
+  <p class="instruction">Click the heart ❤️ to open me~</p>
+
+  <script>
+    // Envelope interaction
+    const envelope = document.getElementById('envelope');
+    const message = document.getElementById('message');
+    const instruction = document.querySelector('.instruction');
+
+    envelope.addEventListener('click', () => {
+      envelope.classList.add('open');
+      instruction.style.display = 'none';
+      setTimeout(() => {
+        message.style.display = 'flex';
+      }, 300);
+    });
+
+    // Create 15 floating hearts
+    for (let i = 0; i < 15; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDelay = Math.random() * 3 + 's';
+      document.body.appendChild(heart);
+    }
+
+    // Ensure emojis display
+    document.querySelectorAll('h1, p').forEach(el => {
+      el.innerHTML = el.innerHTML.replace(/^\s+|\s+$/g, '');
+    });
+  </script>
+</body>
+</html>
